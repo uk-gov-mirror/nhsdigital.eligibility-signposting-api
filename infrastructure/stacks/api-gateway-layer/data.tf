@@ -24,7 +24,7 @@ data "aws_s3_bucket" "truststore_bucket" {
 }
 
 data "aws_s3_object" "pem_file" {
-  bucket = data.aws_s3_bucket.truststore_bucket
+  bucket = data.aws_s3_bucket.truststore_bucket.bucket
   key    = "truststore.pem"
 }
 

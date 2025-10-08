@@ -86,7 +86,7 @@ resource "aws_api_gateway_domain_name" "check_eligibility" {
   ownership_verification_certificate_arn = data.aws_acm_certificate.validation_cert.arn
 
   mutual_tls_authentication {
-    truststore_uri     = "s3://${data.aws_s3_bucket.truststore_bucket}/truststore.pem"
+    truststore_uri     = "s3://${data.aws_s3_bucket.truststore_bucket.bucket}/truststore.pem"
     truststore_version = data.aws_s3_object.pem_file.version_id
   }
 
