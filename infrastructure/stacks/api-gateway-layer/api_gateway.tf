@@ -86,8 +86,8 @@ resource "aws_api_gateway_domain_name" "check_eligibility" {
   ownership_verification_certificate_arn = data.aws_acm_certificate.validation_cert.arn
 
   mutual_tls_authentication {
-    truststore_uri     = "s3://${module.s3_truststore_bucket.storage_bucket_name}/truststore.pem"
-    truststore_version = aws_s3_object.pem_file.version_id
+    truststore_uri     = "s3://${data.aws_s3_bucket.truststore_bucket}/truststore.pem"
+    truststore_version = data.aws_s3_object.pem_file.version_id
   }
 
   security_policy = "TLS_1_2"
@@ -101,10 +101,10 @@ resource "aws_api_gateway_domain_name" "check_eligibility" {
   }
 
   depends_on = [
-    aws_s3_object.pem_file,
+    data.aws_s3_object.pem_file,
     data.aws_acm_certificate.imported_cert,
     data.aws_acm_certificate.validation_cert,
-    module.s3_truststore_bucket,
+    data.aws_s3_bucket.truststore_bucket,
     module.eligibility_signposting_api_gateway
   ]
 }
