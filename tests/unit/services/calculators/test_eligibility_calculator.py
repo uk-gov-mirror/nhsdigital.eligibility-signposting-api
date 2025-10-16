@@ -2144,9 +2144,6 @@ class TestEligibilityResultBuilder:
 
         person_rows = person_rows_builder(nhs_number, date_of_birth=date_of_birth, cohorts=["cohort1"])
 
-        a = rule_builder.RulesMapperFactory.build()
-        #rule_builder.CampaignConfigFactory.build(iterations=[rule_builder.IterationFactory.build(rules_mapper = rule_builder.RulesMapperFactory.build())])
-
         campaign_configs = [
             rule_builder.CampaignConfigFactory.build(
                 target="RSV",
