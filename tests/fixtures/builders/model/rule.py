@@ -26,6 +26,7 @@ from eligibility_signposting_api.model.campaign_config import (
     RuleType,
     StatusText,
     Virtual,
+    RulesMapper, RuleEntry,
 )
 
 
@@ -68,6 +69,14 @@ class StatusTextFactory(ModelFactory[StatusText]):
     not_actionable = "Not actionable status text"
     actionable = "Actionable status text"
 
+class RuleEntryFactory(ModelFactory[RuleEntry]):
+    rule_names = ["some_name"]
+    rule_code = "some_name"
+    rule_text = "some_name"
+
+class RulesMapperFactory(ModelFactory[RulesMapper]):
+    other_setting = Use(RuleEntryFactory.build)
+    already_jabbed = Use(RuleEntryFactory.build)
 
 class IterationFactory(ModelFactory[Iteration]):
     iteration_cohorts = Use(IterationCohortFactory.batch, size=2)
@@ -75,8 +84,7 @@ class IterationFactory(ModelFactory[Iteration]):
     iteration_date = Use(past_date)
     default_comms_routing = "defaultcomms"
     actions_mapper = Use(ActionsMapperFactory.build)
-    rules_mapper = None
-
+    rules_mapper = Use(RulesMapperFactory.build)
 
 class RawCampaignConfigFactory(ModelFactory[CampaignConfig]):
     iterations = Use(IterationFactory.batch, size=2)

@@ -2135,3 +2135,36 @@ class TestEligibilityResultBuilder:
 
         assert_that(len(result.cohort_results), is_(1))
         assert_that(result.cohort_results[0].reasons, contains_inanyorder(*expected_reasons))
+
+
+    def test_rule_code_from_rules_mapper_is_used_when_provided(self, faker: Faker):
+        # Given
+        nhs_number = NHSNumber(faker.nhs_number())
+        date_of_birth = DateOfBirth(faker.date_of_birth(minimum_age=76, maximum_age=79))
+
+        person_rows = person_rows_builder(nhs_number, date_of_birth=date_of_birth, cohorts=["cohort1"])
+
+        a = rule_builder.RulesMapperFactory.build()
+        #rule_builder.CampaignConfigFactory.build(iterations=[rule_builder.IterationFactory.build(rules_mapper = rule_builder.RulesMapperFactory.build())])
+
+        campaign_configs = [
+            rule_builder.CampaignConfigFactory.build(
+                target="RSV",
+                iterations=[
+                    rule_builder.IterationFactory.build(
+                        default_comms_routing="TOKEN_TEST",
+                        iteration_cohorts=[rule_builder.IterationCohortFactory.build()],
+                        iteration_rules=[rule_builder.PersonAgeSuppressionRuleFactory.build()],
+                        rules_mapper=rule_builder.RulesMapperFactory.build(),
+                    )
+                ],
+            )
+        ]
+
+        calculator = EligibilityCalculator(person_rows, campaign_configs)
+
+        # When
+        actual = calculator.get_eligibility_status("Y", ["ALL"], "ALL")
+
+        # Then
+
