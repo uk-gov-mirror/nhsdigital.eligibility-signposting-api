@@ -40,7 +40,6 @@ RuleCode = NewType("RuleCode", str)
 RuleText = NewType("RuleText", str)
 
 
-
 class RuleType(StrEnum):
     filter = "F"
     suppression = "S"
@@ -175,6 +174,7 @@ class StatusText(BaseModel):
 
     model_config = {"populate_by_name": True, "extra": "ignore"}
 
+
 class RuleEntry(BaseModel):
     rule_names: list[RuleName] = Field(..., alias="RuleNames")
     rule_code: RuleCode = Field(..., alias="RuleCode")
@@ -182,11 +182,13 @@ class RuleEntry(BaseModel):
 
     model_config = {"populate_by_name": True}
 
+
 class RulesMapper(BaseModel):
     other_setting: RuleEntry = Field(..., alias="OTHER_SETTING")
     already_jabbed: RuleEntry = Field(..., alias="ALREADY_JABBED")
 
     model_config = {"populate_by_name": True}
+
 
 class Iteration(BaseModel):
     id: IterationID = Field(..., alias="ID")

@@ -2136,7 +2136,6 @@ class TestEligibilityResultBuilder:
         assert_that(len(result.cohort_results), is_(1))
         assert_that(result.cohort_results[0].reasons, contains_inanyorder(*expected_reasons))
 
-
     def test_rule_code_from_rules_mapper_is_used_when_provided(self, faker: Faker):
         # Given
         nhs_number = NHSNumber(faker.nhs_number())
@@ -2161,7 +2160,6 @@ class TestEligibilityResultBuilder:
         calculator = EligibilityCalculator(person_rows, campaign_configs)
 
         # When
-        actual = calculator.get_eligibility_status("Y", ["ALL"], "ALL")
+        calculator.get_eligibility_status("Y", ["ALL"], "ALL")
 
         # Then
-
