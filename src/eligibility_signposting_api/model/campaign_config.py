@@ -180,9 +180,13 @@ class RuleEntry(BaseModel):
     rule_code: RuleCode = Field(..., alias="RuleCode")
     rule_text: RuleText = Field(..., alias="RuleText")
 
+    model_config = {"populate_by_name": True}
+
 class RulesMapper(BaseModel):
     other_setting: RuleEntry = Field(..., alias="OTHER_SETTING")
     already_jabbed: RuleEntry = Field(..., alias="ALREADY_JABBED")
+
+    model_config = {"populate_by_name": True}
 
 class Iteration(BaseModel):
     id: IterationID = Field(..., alias="ID")
