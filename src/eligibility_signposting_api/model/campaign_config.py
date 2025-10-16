@@ -175,14 +175,6 @@ class StatusText(BaseModel):
 
     model_config = {"populate_by_name": True, "extra": "ignore"}
 
-class RuleEntry(BaseModel):
-    rule_names: list[RuleName] = Field(..., alias="RuleNames")
-    rule_code: RuleCode | None = Field(None, alias="RuleCode")
-    rule_text: RuleText = Field(..., alias="RuleText")
-
-class RulesMapper(BaseModel):
-    other_setting: RuleEntry = Field(..., alias="OTHER_SETTING")
-    already_jabbed: RuleEntry = Field(..., alias="ALREADY_JABBED")
 
 class Iteration(BaseModel):
     id: IterationID = Field(..., alias="ID")
@@ -199,7 +191,6 @@ class Iteration(BaseModel):
     iteration_cohorts: list[IterationCohort] = Field(..., alias="IterationCohorts")
     iteration_rules: list[IterationRule] = Field(..., alias="IterationRules")
     actions_mapper: ActionsMapper = Field(..., alias="ActionsMapper")
-    rules_mapper: RulesMapper = Field(..., alias="RulesMapper")
     status_text: StatusText | None = Field(None, alias="StatusText")
 
     model_config = {"populate_by_name": True, "arbitrary_types_allowed": True, "extra": "ignore"}
